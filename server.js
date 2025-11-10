@@ -25,6 +25,20 @@ app.get("/usuarios", (req, res) => {
   });
 });
 
+// POST /usuarios → insere um novo usuário no banco
+app.post("/usuarios", (req, res) => {
+  const { nome, email } = req.body; // Extrai os dados enviados pelo front
+  db.query(
+    "INSERT INTO usuarios (nome, email) VALUES (?, ?)", // Query SQL com placeholders
+    [nome, email], // Valores que substituem os "?"
+    (err, result) => {
+      if (err) throw err;
+      res.json({ message: "Usuário adicionado com sucesso!" }); // Retorno de sucesso
+    }
+  );
+});
+
+
 app.listen(3000, () =>
   console.log("Servidor rodando em http://localhost:3000")
 );
